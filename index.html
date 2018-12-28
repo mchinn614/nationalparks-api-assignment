@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>National Parks Search</title>
+        <link rel="stylesheet" href="main.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <h1>National Parks Search</h1>
+        <form class='form'>
+            <label for='state-code'>Enter 2-letter state code(s), separated by comma</label><br>
+            <input type=text class='state-code' name='state-code'><br>
+            <label for='max-results'>Enter maximum number of results</label><br>
+            <input type=number class='max-results' name='max-results' value=10 min=1><br>
+            <input type=submit value='Go!'>
+        </form>
+        <section class='hidden results'>
+            <h2>Results</h2>
+            <ul class='results-list'></ul>
+        </section>
+    </body>
+</html>
