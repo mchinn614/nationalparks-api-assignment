@@ -19,7 +19,8 @@ function getResults(stateCode,maxResults=10){
   const param = {
     api_key:'4sC0qMZ7q0QFCeSm8v2zJIlMHughxVfGNZU3Np77',
     stateCode:stateCode,
-    limit:maxResults
+    limit:maxResults,
+    fields:'addresses'
   }
   const url = formatQueryUrl(param);
   console.log(url)
@@ -35,6 +36,13 @@ function getResults(stateCode,maxResults=10){
 
 };
 
+//parse address
+function parseAddress(addressJson){
+  return (addressJson.line1 + '\n' + addressJson.line2 + '\n' +
+          addressJson.city + ', ' + addressJson.stateCode + '\n' + 
+          addressJson.postalCode)
+}
+
 // display results of API call
 function displayResults(responseJson){
   $('.results-list').empty();
@@ -44,10 +52,15 @@ function displayResults(responseJson){
   else {
       var i
       for (i=0;i<responseJson.data.length;i++){
-        console.log(responseJson.data[i].fullName)
-        console.log(responseJson.data[i].description)
-        console.log(responseJson.data[i].url)
-        $('.results-list').append(`<h3><a href =${responseJson.data[i].url}>${responseJson.data[i].fullName}</a></h3><p>${responseJson.data[i].description}</p>`)
+        $('.results-list').append(`<h3><a href =${responseJson.data[i].url}>${responseJson.data[i].fullName}</a></h3>`)
+        var j
+        for (j=0;j<responseJson.data[i].addresses.length;j++){
+          if (responseJson.data[i].addresses[j].type==='Physical'){
+            var addressString = parseAddress(responseJson.data[i].addresses[j])
+          }
+        }
+        $('.results-list').append(`<h4>${addressString}<h4>`)
+        $('.results-list').append(`<p>${responseJson.data[i].description}</p>`)
       }
   }
   $('section').removeClass('hidden')
